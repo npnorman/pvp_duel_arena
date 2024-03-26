@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class PunchDummy : MonoBehaviour
 
     [Header("Sword Data")]
     public GameObject sword;
+    public float timeAtAttack = 0.2f;
     public float cooldown = 0.5f;
 
     //raycast variables
@@ -61,7 +63,7 @@ public class PunchDummy : MonoBehaviour
         sword.GetComponent<Animator>().SetTrigger("swingSword");
 
         //wait for animation
-        yield return new WaitForSeconds(0.17f);
+        yield return new WaitForSeconds(timeAtAttack);
 
         //do this after each animation
         if (Physics.Raycast(ray, out hit, punchRange))
@@ -74,9 +76,9 @@ public class PunchDummy : MonoBehaviour
             }
         }
 
-        if (cooldown < 1f - 0.17f)
+        if (cooldown < 1f - timeAtAttack)
         {
-            cooldown = 1f - 0.17f;
+            cooldown = 1f - timeAtAttack;
         }
 
         yield return new WaitForSeconds(cooldown);
