@@ -945,6 +945,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   orientation: {fileID: 1630534024}
+  sword: {fileID: 1494033989}
 --- !u!114 &1071190099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,6 +964,7 @@ MonoBehaviour:
   gameManager: {fileID: 594652217}
   cam: {fileID: 963194227}
   sword: {fileID: 1494033989}
+  cooldown: 0.5
 --- !u!114 &1071190100
 MonoBehaviour:
   m_ObjectHideFlags: 0

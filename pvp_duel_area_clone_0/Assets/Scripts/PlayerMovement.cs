@@ -34,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    [Header("Animations")]
+    public GameObject sword;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,10 +66,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(sprint))
         {
             sprintSpeed = sprintMult;
+            sword.GetComponent<Animator>().SetBool("isSprinting", true);
         } 
         else
         {
             sprintSpeed = 1;
+            sword.GetComponent<Animator>().SetBool("isSprinting", false);
         }
         MovePlayer();
     }
