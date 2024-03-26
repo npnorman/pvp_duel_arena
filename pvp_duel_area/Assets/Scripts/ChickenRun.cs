@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class ChickenRun : MonoBehaviour
 {
-    public Transform Player;
+    Transform Player;
     int MoveSpeed = 4;
     //int MaxDist = 10;
     int MinDist = 5;
 
+    private void Start()
+    {
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     void Update()
     {

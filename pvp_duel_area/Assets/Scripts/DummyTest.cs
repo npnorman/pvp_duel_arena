@@ -7,7 +7,7 @@ public class DummyTest : MonoBehaviour
 {
     Animator animator;
 
-    public GameObject player;
+    GameObject player;
     public int health = 10;
     bool isDead;
     public float knockback = 10;
@@ -17,6 +17,7 @@ public class DummyTest : MonoBehaviour
     {
         isDead = false;
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void attacked(int attk)
@@ -43,7 +44,12 @@ public class DummyTest : MonoBehaviour
         {
             isDead = true;
             animator.SetTrigger("isDead");
-            this.GetComponent<BoxCollider>().enabled = false;
+
+            BoxCollider col;
+            if(this.TryGetComponent<BoxCollider>(out col))
+            {
+                col.enabled = false;
+            }
         }
     }
 }
