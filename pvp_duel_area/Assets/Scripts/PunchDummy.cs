@@ -8,24 +8,34 @@ public class PunchDummy : MonoBehaviour
 
     public KeyCode punchKey = KeyCode.Mouse0;
     public float punchRange;
-    public GameObject gameManager;
-    public LayerMask punchable;
-    bool hasHit = false;
 
-    private void Start()
-    {
-        hasHit = false;
-    }
+    public Transform orientation;
+    
+    public GameObject gameManager;
+    public Camera cam;
+
+    //raycast variables
+    Ray ray;
+    RaycastHit hit;
 
     void Update()
     {
         //if punching, send a raycast out. if it hits something within a range,
         //return to gamemanager
 
-        if(Input.GetKey(punchKey))
+        ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if(Input.GetKeyDown(punchKey))
         {
-            Debug.Log("pucnhed");
-            //Ray ray = Physics.Raycast(transform.position, Vector3.forward, punchRange, punchable);
+            if(Physics.Raycast(ray, out hit, punchRange))
+            {
+
+                DummyTest dt;
+                if(hit.transform.gameObject.TryGetComponent<DummyTest>(out  dt))
+                {
+                    dt.attacked(1);
+                }
+            }
         }
     }
 }
