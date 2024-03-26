@@ -27,6 +27,7 @@ public class DummyTest : MonoBehaviour
         {
             isDead = true;
             animator.SetTrigger("isDead");
+            this.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }

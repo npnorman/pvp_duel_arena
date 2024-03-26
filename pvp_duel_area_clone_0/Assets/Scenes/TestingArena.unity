@@ -962,6 +962,7 @@ MonoBehaviour:
   orientation: {fileID: 1630534024}
   gameManager: {fileID: 594652217}
   cam: {fileID: 963194227}
+  sword: {fileID: 1494033989}
 --- !u!114 &1071190100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,7 +1423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dd0682cd55d7f8342b8026ebb1cfc4a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 46.598896
+      value: 47.987
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dd0682cd55d7f8342b8026ebb1cfc4a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

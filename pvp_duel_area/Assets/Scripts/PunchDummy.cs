@@ -10,13 +10,25 @@ public class PunchDummy : MonoBehaviour
     public float punchRange;
 
     public Transform orientation;
-    
+
+    [Header("Game Data")]
     public GameObject gameManager;
     public Camera cam;
+
+    [Header("Sword Data")]
+    public GameObject sword;
+    public float cooldown = 0.5f;
 
     //raycast variables
     Ray ray;
     RaycastHit hit;
+
+    bool isAttacking;
+
+    private void Start()
+    {
+        isAttacking = false;
+    }
 
     void Update()
     {
@@ -25,17 +37,50 @@ public class PunchDummy : MonoBehaviour
 
         ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if(Input.GetKeyDown(punchKey))
+        /*
+        if (sword.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("idle"))
         {
-            if(Physics.Raycast(ray, out hit, punchRange))
-            {
+            isAttacking = false;
+        }
+        */
 
-                DummyTest dt;
-                if(hit.transform.gameObject.TryGetComponent<DummyTest>(out  dt))
-                {
-                    dt.attacked(1);
-                }
+        if (Input.GetKeyDown(punchKey))
+        {
+
+            if (!isAttacking)
+            {
+                isAttacking = true;
+                StartCoroutine(SwordAttack());
             }
         }
+    }
+
+    IEnumerator SwordAttack()
+    {
+        //do animations
+        sword.GetComponent<Animator>().SetTrigger("swingSword");
+
+        //wait for animation
+        yield return new WaitForSeconds(0.17f);
+
+        //do this after each animation
+        if (Physics.Raycast(ray, out hit, punchRange))
+        {
+
+            DummyTest dt;
+            if (hit.transform.gameObject.TryGetComponent<DummyTest>(out dt))
+            {
+                dt.attacked(1);
+            }
+        }
+
+        if (cooldown < 1f - 0.17f)
+        {
+            cooldown = 1f - 0.17f;
+        }
+
+        yield return new WaitForSeconds(cooldown);
+
+        isAttacking = false;
     }
 }
