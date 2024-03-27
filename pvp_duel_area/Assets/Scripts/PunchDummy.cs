@@ -7,7 +7,7 @@ public class PunchDummy : MonoBehaviour
 
     public KeyCode punchKey = KeyCode.Mouse0;
 
-
+    /*
     [Header("Sword Data")]
     public GameObject sword;
     public float cooldown = 0.5f;
@@ -45,4 +45,5 @@ public class PunchDummy : MonoBehaviour
         yield return new WaitForSeconds(cooldown);
         isAttacking = false;
     }
+    */
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -34,46 +35,54 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
-    [Header("Animations")]
-    public GameObject sword;
+    //[Header("Animations")]
+    //public GameObject sword;
+
+    //multiplayer stuff
+    PhotonView view;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        view = this.GetComponent<PhotonView>();
     }
 
     private void Update()
     {
-        //ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
-        MyInput();
-        SpeedControl();
-
-        if (grounded)
+        if(view.IsMine)
         {
-            rb.drag = groundDrag;
-        }
-        else
-        {
-            rb.drag = 0;
+            //ground check
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
+            MyInput();
+            SpeedControl();
+
+            if (grounded)
+            {
+                rb.drag = groundDrag;
+            } else
+            {
+                rb.drag = 0;
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(sprint))
+        if (view.IsMine)
         {
-            sprintSpeed = sprintMult;
-            sword.GetComponent<Animator>().SetBool("isSprinting", true);
-        } 
-        else
-        {
-            sprintSpeed = 1;
-            sword.GetComponent<Animator>().SetBool("isSprinting", false);
+            if (Input.GetKey(sprint))
+            {
+                sprintSpeed = sprintMult;
+                //sword.GetComponent<Animator>().SetBool("isSprinting", true);
+            } else
+            {
+                sprintSpeed = 1;
+                //sword.GetComponent<Animator>().SetBool("isSprinting", false);
+            }
+            MovePlayer();
         }
-        MovePlayer();
     }
 
     private void MyInput()
